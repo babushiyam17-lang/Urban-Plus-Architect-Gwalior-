@@ -2,39 +2,39 @@ const root = document.getElementById('root');
 
 const projects = [
   {
-    name: 'Pixzen',
-    category: 'Digital Experience',
+    name: 'Courtyard House',
+    category: 'Residential Architecture',
     year: '2026',
-    image: 'https://strvid.nyc3.cdn.digitaloceanspaces.com/motionitems/1781522720269-Pixzen.webp',
-    text: 'A high-energy visual system built around clarity, motion and bold digital storytelling.'
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=85',
+    text: 'A calm contemporary residence organized around light, landscape and a private courtyard.'
   },
   {
-    name: 'Wander',
-    category: 'Brand & Web',
-    year: '2026',
-    image: 'https://strvid.nyc3.cdn.digitaloceanspaces.com/motionitems/1781631791578-Wander_Hero.webp',
-    text: 'A cinematic experience that turns discovery into an intuitive, memorable journey.'
+    name: 'Monumental Residence',
+    category: 'Luxury Residence',
+    year: '2025',
+    image: 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1800&q=85',
+    text: 'A refined home with strong volumes, deep openings and a timeless architectural material palette.'
   },
   {
-    name: 'Agentify',
-    category: 'Product Design',
-    year: '2026',
-    image: 'https://strvid.nyc3.cdn.digitaloceanspaces.com/motionitems/1781671943344-Agentify_Hero.webp',
-    text: 'A refined interface direction balancing intelligent technology with human-centered interaction.'
+    name: 'Casa 27',
+    category: 'Interior Design',
+    year: '2025',
+    image: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1800&q=85',
+    text: 'Warm interiors shaped through natural materials, custom furniture and layered ambient light.'
   },
   {
-    name: 'Future',
-    category: 'Creative Direction',
+    name: 'Light & Stone',
+    category: 'Architectural Visualization',
     year: '2026',
-    image: 'https://strvid.nyc3.cdn.digitaloceanspaces.com/motionitems/1781679053418-Future_Carousel.webp',
-    text: 'A forward-looking identity and digital language designed to feel unmistakably next-generation.'
+    image: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1800&q=85',
+    text: 'An atmospheric architectural study where material, shadow and natural light define the experience.'
   },
   {
-    name: 'Genova',
-    category: 'Premium Digital',
+    name: 'Urban Residence',
+    category: 'Contemporary Architecture',
     year: '2026',
-    image: 'https://strvid.nyc3.cdn.digitaloceanspaces.com/motionitems/1781670271708-Genova_Hero.webp',
-    text: 'A sophisticated visual world where typography, imagery and interaction work as one.'
+    image: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=1800&q=85',
+    text: 'A contemporary composition balancing privacy, openness, landscape and generous natural light.'
   }
 ];
 
@@ -161,7 +161,7 @@ document.getElementById('service-grid').innerHTML = services.map((s, i) => `
 
 document.getElementById('work-gallery').innerHTML = projects.map((p, i) => `
   <article class="work-item ${i === 0 ? 'active' : ''} reveal" data-index="${i}" tabindex="0" role="button" aria-label="Open ${p.name} project">
-    <div class="work-image"><img src="${p.image}" alt="${p.name} project visual" ${i > 0 ? 'loading="lazy"' : ''}><div class="work-overlay"></div></div>
+    <div class="work-image"><img src="${p.image}" alt="${p.name} architectural project photograph" ${i > 0 ? 'loading="lazy"' : ''}><div class="work-overlay"></div></div>
     <div class="work-content"><span>${p.category} · ${p.year}</span><h3>${p.name}</h3><p>${p.text}</p><a href="#contact">View project <b>↗</b></a></div>
     <span class="work-index">0${i + 1}</span>
   </article>`).join('');
