@@ -1,4 +1,4 @@
-import { mkdir, rm, cp, readFile } from 'node:fs/promises'
+import { mkdir, rm, cp, readFile, writeFile } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
 
 const dist = new URL('../dist/', import.meta.url)
@@ -12,7 +12,6 @@ const baseCss = await readFile(new URL('../src/premium.css', import.meta.url), '
 const experienceCss = await readFile(new URL('../src/experience.css', import.meta.url), 'utf8')
 const css = baseCss + '\n' + experienceCss
 const js = await readFile(new URL('./site.js', import.meta.url), 'utf8')
-await readFile(new URL('../src/experience.css', import.meta.url), 'utf8')
 await writeFile(new URL('assets/main.css', dist), css)
 await writeFile(new URL('assets/main.js', dist), js)
 
