@@ -21,46 +21,20 @@ export default function App() {
   const rootRef = useRef(null)
   const [selectedProject, setSelectedProject] = useState(null)
   const [activeService, setActiveService] = useState(0)
-  const is404 = window.location.pathname !== '/'
+  const [submitted, setSubmitted] = useState(false)
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReducedMotion || is404) return undefined
+    if (prefersReducedMotion) return undefined
 
     const context = gsap.context(() => {
-      // Softer entrance motion: slower acceleration/deceleration and smaller travel distance.
-      gsap.from('.reveal-title span', {
-        yPercent: 70,
-        opacity: 0,
-        duration: 1.45,
-        ease: 'power2.out',
-        stagger: 0.11,
-        force3D: true,
-      })
-
-      gsap.from('.hero .fade', {
-        y: 14,
-        opacity: 0,
-        duration: 1.15,
-        delay: 0.42,
-        stagger: 0.1,
-        ease: 'power2.out',
-        force3D: true,
-      })
+      gsap.from('.reveal-title span', { yPercent: 70, opacity: 0, duration: 1.45, ease: 'power2.out', stagger: 0.11, force3D: true })
+      gsap.from('.hero .fade', { y: 14, opacity: 0, duration: 1.15, delay: 0.42, stagger: 0.1, ease: 'power2.out', force3D: true })
 
       gsap.utils.toArray('.reveal').forEach((element) => {
         gsap.from(element, {
-          scrollTrigger: {
-            trigger: element,
-            start: 'top 86%',
-            once: true,
-            fastScrollEnd: true,
-          },
-          y: 24,
-          opacity: 0,
-          duration: 1.05,
-          ease: 'power2.out',
-          force3D: true,
+          scrollTrigger: { trigger: element, start: 'top 86%', once: true, fastScrollEnd: true },
+          y: 24, opacity: 0, duration: 1.05, ease: 'power2.out', force3D: true,
         })
       })
 
@@ -68,40 +42,23 @@ export default function App() {
         const visual = card.querySelector('.project-visual')
         if (!visual) return
         gsap.to(visual, {
-          scrollTrigger: {
-            trigger: card,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 1.35,
-            invalidateOnRefresh: true,
-          },
-          yPercent: -4,
-          ease: 'none',
-          force3D: true,
+          scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: 1.35, invalidateOnRefresh: true },
+          yPercent: -4, ease: 'none', force3D: true,
         })
       })
 
       gsap.to('.process-line', {
-        scrollTrigger: {
-          trigger: '.process',
-          start: 'top 72%',
-          end: 'bottom 70%',
-          scrub: 1.5,
-          invalidateOnRefresh: true,
-        },
-        scaleY: 1,
-        transformOrigin: 'top',
-        ease: 'none',
+        scrollTrigger: { trigger: '.process', start: 'top 72%', end: 'bottom 70%', scrub: 1.5, invalidateOnRefresh: true },
+        scaleY: 1, transformOrigin: 'top', ease: 'none',
       })
 
-      // Let ScrollTrigger recalculate after mobile browser viewport changes.
       const refresh = () => ScrollTrigger.refresh()
       window.addEventListener('load', refresh, { once: true })
       setTimeout(refresh, 250)
     }, rootRef)
 
     return () => context.revert()
-  }, [is404])
+  }, [])
 
   useEffect(() => {
     if (!selectedProject) return undefined
@@ -114,7 +71,10 @@ export default function App() {
     }
   }, [selectedProject])
 
-  if (is404) return <NotFound />
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    setSubmitted(true)
+  }
 
   return (
     <main ref={rootRef}>
@@ -124,6 +84,7 @@ export default function App() {
           <a className="brand" href="#top">Urban Plus Architect</a>
           <a href="#projects">Work</a>
           <a href="#services">Services</a>
+          <a href="#ai">AI Studio</a>
           <a href="#contact">Contact</a>
         </nav>
         <div className="hero-copy">
@@ -144,7 +105,7 @@ export default function App() {
       <section className="projects section" id="projects" aria-labelledby="projects-title">
         <div className="section-head reveal">
           <p className="section-kicker">Selected Projects</p>
-          <h2 id="projects-title">Editorial studies in space, light and material.</h2>
+          <h2 id="projects-title">The original five project visuals, restored.</h2>
         </div>
         <div className="project-grid">
           {projects.map((project) => (
@@ -172,6 +133,20 @@ export default function App() {
         </div>
       </section>
 
+      <section className="ai-studio section" id="ai" aria-labelledby="ai-title">
+        <div className="ai-copy reveal">
+          <p className="section-kicker">Artificial Intelligence</p>
+          <h2 id="ai-title">AI-assisted architecture, without losing the human eye.</h2>
+          <p className="lead">Use AI to explore massing, façade directions, material palettes, lighting moods and early visual concepts faster — while final design decisions stay grounded in site, structure and real human needs.</p>
+          <a className="button" href="#contact">Discuss an AI concept <Icon name="arrow" /></a>
+        </div>
+        <div className="ai-cards reveal" aria-label="AI capabilities">
+          <article><span>01</span><strong>Concept Generation</strong><p>Rapid visual directions for early design exploration.</p></article>
+          <article><span>02</span><strong>Material & Mood</strong><p>Compare finishes, light, atmosphere and façade language.</p></article>
+          <article><span>03</span><strong>3D Visualization</strong><p>Turn selected concepts into polished presentation imagery.</p></article>
+        </div>
+      </section>
+
       <section className="philosophy" aria-label="Design statement">
         <h2 className="reveal">Good architecture does not shout.<br />It stays with you.</h2>
       </section>
@@ -191,25 +166,26 @@ export default function App() {
 
       <section className="contact section" id="contact" aria-labelledby="contact-title">
         <div className="reveal">
-          <p className="section-kicker">Enquiry</p>
-          <h2 id="contact-title">Have a space in mind?</h2>
-          <p className="placeholder">Contact details below are placeholders and should be replaced with Urban Plus Architect’s verified phone, email and social links.</p>
-          <a className="whatsapp" href="https://wa.me/910000000000"><Icon name="message" /> WhatsApp placeholder</a>
+          <p className="section-kicker">Project Enquiry</p>
+          <h2 id="contact-title">Tell us what you want to build.</h2>
+          <p className="placeholder">Share your project basics and we can start the conversation around architecture, interiors, 3D visualization or an AI-assisted concept.</p>
+          <a className="whatsapp" href="https://wa.me/910000000000"><Icon name="message" /> WhatsApp</a>
         </div>
-        <form className="reveal" onSubmit={(event) => event.preventDefault()}>
+        <form className="reveal" onSubmit={handleSubmit}>
           {['Name', 'Email', 'Phone', 'Project type', 'Budget range'].map((field) => (
             <label key={field}>{field}<input required={field !== 'Budget range'} type={field === 'Email' ? 'email' : 'text'} placeholder={field} /></label>
           ))}
           <label>Message<textarea placeholder="Tell us about the site, scope and timeline." /></label>
-          <button className="button" type="submit">Send enquiry</button>
+          <button className="button" type="submit">{submitted ? 'Enquiry ready ✓' : 'Send enquiry'}</button>
+          {submitted && <p className="form-success" role="status">Thanks — your enquiry is captured on this page. Connect the form to your preferred email or CRM to receive submissions.</p>}
         </form>
       </section>
 
       <footer>
         <strong>Urban Plus Architect</strong>
         <span>Gwalior, India</span>
-        <span>Architecture / Interiors / Spatial Design</span>
-        <span>Instagram · Email · Phone (placeholders)</span>
+        <span>Architecture / Interiors / Spatial Design / AI Visualization</span>
+        <span>Instagram · Email · Phone</span>
       </footer>
 
       {selectedProject && <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />}
@@ -231,8 +207,4 @@ function ProjectModal({ project, onClose }) {
       </section>
     </div>
   )
-}
-
-function NotFound() {
-  return <main className="notfound"><p className="section-kicker">404</p><h1>Space not found.</h1><p>This page does not exist. Return to the Urban Plus Architect homepage.</p><a className="button" href="/">Back home</a></main>
 }
