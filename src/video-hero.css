@@ -16,6 +16,8 @@
   height: 100% !important;
   overflow: hidden !important;
   pointer-events: none !important;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .hero-video {
@@ -26,9 +28,11 @@
   display: block !important;
   object-fit: cover !important;
   object-position: center center !important;
-  transform: scale(1.035) !important;
+  transform: scale(1.035) translateZ(0) !important;
   filter: saturate(.88) contrast(1.04) brightness(.82) !important;
   z-index: 0 !important;
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .hero-video-overlay {
@@ -38,6 +42,7 @@
   background:
     linear-gradient(180deg, rgba(0,0,0,.22) 0%, rgba(0,0,0,.04) 32%, rgba(0,0,0,.34) 72%, rgba(0,0,0,.78) 100%),
     linear-gradient(90deg, rgba(0,0,0,.48) 0%, rgba(0,0,0,.10) 58%, rgba(0,0,0,.24) 100%);
+  pointer-events: none;
 }
 
 .hero-video-vignette {
@@ -45,13 +50,14 @@
   inset: -10%;
   z-index: 2;
   background: radial-gradient(circle at 52% 42%, transparent 38%, rgba(0,0,0,.38) 100%);
+  pointer-events: none;
 }
 
 .hero-video-grain {
   position: absolute;
   inset: 0;
   z-index: 3;
-  opacity: .055;
+  opacity: .035;
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
   mix-blend-mode: soft-light;
@@ -62,7 +68,7 @@
   top: 28px !important;
   left: 50% !important;
   z-index: 20 !important;
-  transform: translateX(-50%) !important;
+  transform: translateX(-50%) translateZ(0) !important;
   width: min(92vw, 1080px) !important;
   min-height: 64px !important;
   padding: 10px 14px 10px 24px !important;
@@ -76,6 +82,7 @@
   backdrop-filter: blur(22px) saturate(130%) !important;
   -webkit-backdrop-filter: blur(22px) saturate(130%) !important;
   box-shadow: 0 18px 70px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.16) !important;
+  backface-visibility: hidden;
 }
 
 .hero > nav .brand {
@@ -102,7 +109,7 @@
   width: 0;
   height: 1px;
   background: #fff;
-  transition: width .3s ease;
+  transition: width .45s cubic-bezier(.22,1,.36,1);
 }
 
 .hero > nav > a:not(.brand):hover::after { width: 100%; }
@@ -113,8 +120,9 @@
   left: clamp(24px, 7vw, 96px) !important;
   right: clamp(24px, 7vw, 96px) !important;
   top: 50% !important;
-  transform: translateY(-45%) !important;
+  transform: translateY(-45%) translateZ(0) !important;
   max-width: 1050px !important;
+  backface-visibility: hidden;
 }
 
 .hero-copy .eyebrow {
@@ -141,6 +149,8 @@
   display: block !important;
   white-space: nowrap !important;
   overflow: visible !important;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 .hero-copy h1 span:nth-child(2) { margin-left: .08em !important; }
@@ -166,10 +176,12 @@
   color: #0b0d12 !important;
   font-weight: 800 !important;
   box-shadow: 0 12px 35px rgba(0,0,0,.22) !important;
-  transition: transform .3s ease, box-shadow .3s ease !important;
+  transition: transform .55s cubic-bezier(.22,1,.36,1), box-shadow .55s cubic-bezier(.22,1,.36,1) !important;
+  will-change: transform;
 }
 
-.hero-copy .button:hover { transform: translateY(-3px) scale(1.025) !important; box-shadow: 0 18px 42px rgba(0,0,0,.28) !important; }
+.hero-copy .button:hover { transform: translateY(-3px) scale(1.018) !important; box-shadow: 0 18px 42px rgba(0,0,0,.28) !important; }
+.hero-copy .button:active { transform: translateY(0) scale(.99) !important; }
 .hero-copy .button svg { width: 20px !important; height: 20px !important; stroke: currentColor !important; fill: none !important; stroke-width: 2 !important; }
 
 .hero .scroll {
@@ -177,7 +189,7 @@
   z-index: 15 !important;
   left: 50% !important;
   bottom: 30px !important;
-  transform: translateX(-50%) !important;
+  transform: translateX(-50%) translateZ(0) !important;
   color: rgba(255,255,255,.78) !important;
   text-transform: uppercase !important;
   letter-spacing: .24em !important;
@@ -200,7 +212,7 @@
     left: 24px !important;
     right: 24px !important;
     top: 52% !important;
-    transform: translateY(-50%) !important;
+    transform: translateY(-50%) translateZ(0) !important;
   }
 
   .hero-copy .eyebrow {
