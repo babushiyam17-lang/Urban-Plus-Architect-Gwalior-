@@ -1,6 +1,6 @@
 .project-3d-visual{position:relative!important;isolation:isolate;overflow:hidden!important;min-height:100%;background:radial-gradient(circle at 50% 25%,#eef0ed 0%,#c9d0cd 48%,#6f7777 100%);border-radius:inherit;perspective:900px}
-.project-3d-photo{position:absolute;inset:-8%;z-index:0;background-image:var(--project-image);background-size:cover;background-position:center;filter:saturate(.82) contrast(1.02);opacity:.34;transform:scale(1.08);transition:transform 1.2s cubic-bezier(.2,.8,.2,1),opacity .7s ease}
-.project-card:hover .project-3d-photo{transform:scale(1.14);opacity:.48}
+.project-3d-photo{position:absolute;inset:-8%;z-index:0;background-image:var(--project-image);background-size:cover;background-position:center;filter:saturate(.92) contrast(1.05);opacity:.78;transform:scale(1.08);transition:transform 1.2s cubic-bezier(.2,.8,.2,1),opacity .7s ease}
+.project-card:hover .project-3d-photo{transform:scale(1.14);opacity:.92}
 .project-3d-depth{position:absolute;inset:0;z-index:2;transform-style:preserve-3d;transform:translate3d(var(--float-x),var(--float-y),0) rotateZ(var(--tilt));pointer-events:none}
 .depth-plane{position:absolute;border:1px solid rgba(255,255,255,.28);background:linear-gradient(135deg,rgba(255,255,255,.20),rgba(255,255,255,.03));box-shadow:0 20px 60px rgba(16,25,31,.16);transform-style:preserve-3d}
 .plane-back{width:68%;height:48%;right:-7%;top:14%;transform:rotateY(-24deg) rotateX(10deg) translateZ(-50px);border-radius:24px}
