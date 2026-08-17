@@ -10,10 +10,12 @@ if (existsSync(new URL('../public/', import.meta.url))) {
 
 const baseCss = await readFile(new URL('../src/premium.css', import.meta.url), 'utf8')
 const experienceCss = await readFile(new URL('../src/experience.css', import.meta.url), 'utf8')
-const css = baseCss + '\n' + experienceCss
+const heroCss = await readFile(new URL('../src/hero-spec.css', import.meta.url), 'utf8')
+const css = baseCss + '\n' + experienceCss + '\n' + heroCss
 const js = await readFile(new URL('./site.js', import.meta.url), 'utf8')
+const heroJs = await readFile(new URL('./hero-override.js', import.meta.url), 'utf8')
 await writeFile(new URL('assets/main.css', dist), css)
-await writeFile(new URL('assets/main.js', dist), js)
+await writeFile(new URL('assets/main.js', dist), js + '\n' + heroJs)
 
 const html = `<!doctype html>
 <html lang="en">
@@ -22,7 +24,7 @@ const html = `<!doctype html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Urban Plus Architect & Associates | Gwalior</title>
   <meta name="description" content="Urban Plus Architect & Associates — architecture, interiors, planning and 3D visualization in Gwalior, Madhya Pradesh.">
-  <meta name="theme-color" content="#f5f1e8">
+  <meta name="theme-color" content="#0c1128">
   <link rel="stylesheet" href="./assets/main.css">
 </head>
 <body>
@@ -32,4 +34,4 @@ const html = `<!doctype html>
 </html>`
 
 await writeFile(new URL('index.html', dist), html)
-console.log('Built light cinematic interactive production site in dist/')
+console.log('Built original scroll-masked animated hero production site in dist/')
