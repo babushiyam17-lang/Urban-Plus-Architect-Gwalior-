@@ -11,8 +11,7 @@ await writeFile(new URL('assets/main.css', dist), css)
 
 const js = String.raw`
 const root = document.getElementById('root')
-root.innerHTML = ` + '`' + `
-<main>
+root.innerHTML = `<main>
   <section class="hero" id="top" aria-labelledby="hero-title">
     <div class="scene-wrap" id="scene" aria-hidden="true"></div>
     <nav aria-label="Primary navigation"><a class="brand" href="#top">Urban Plus Architect</a><a href="#projects">Work</a><a href="#services">Services</a><a href="#contact">Contact</a></nav>
@@ -25,12 +24,12 @@ root.innerHTML = ` + '`' + `
   <section class="process section"><p class="section-kicker reveal">Process</p><div class="process-line" aria-hidden="true"></div><article class="step reveal"><span>01</span><h3>Discover</h3><p>Listen, map the context and define the emotional intent of the space.</p></article><article class="step reveal"><span>02</span><h3>Develop</h3><p>Shape plans, volumes and material direction with clear design logic.</p></article><article class="step reveal"><span>03</span><h3>Visualize</h3><p>Use 3D views and atmosphere studies to refine decisions before execution.</p></article><article class="step reveal"><span>04</span><h3>Deliver</h3><p>Coordinate details into a calm, buildable and enduring final experience.</p></article></section>
   <section class="contact section" id="contact"><div class="reveal"><p class="section-kicker">Enquiry</p><h2>Have a space in mind?</h2><p class="placeholder">Contact details below are placeholders and should be replaced with Urban Plus Architect’s verified phone, email and social links.</p><a class="whatsapp" href="https://wa.me/910000000000">WhatsApp placeholder</a></div><form class="reveal"><label>Name<input required placeholder="Name"></label><label>Email<input required type="email" placeholder="Email"></label><label>Phone<input required placeholder="Phone"></label><label>Project type<input required placeholder="Project type"></label><label>Budget range<input placeholder="Budget range"></label><label>Message<textarea placeholder="Tell us about the site, scope and timeline."></textarea></label><button class="button" type="submit">Send enquiry</button></form></section>
   <footer><strong>Urban Plus Architect</strong><span>Gwalior, India</span><span>Architecture / Interiors / Spatial Design</span><span>Instagram · Email · Phone (placeholders)</span></footer>
-</main>` + '`' + `
+</main>`
 const projects=[['The Courtyard House','Residential Architecture','Gwalior / 2026','sand','A calm inward-looking residence organized around shadow, planted edges, and filtered daylight.'],['Monumental Residence','Luxury Residence','Madhya Pradesh / 2025','charcoal','A grounded family home with carved volumes, deep verandahs, and a restrained material palette.'],['Casa 27','Interior Design','Gwalior / 2025','clay','Warm interiors shaped through tactile surfaces, built-in furniture, and precise ambient light.'],['Light & Stone','3D Visualization','India / 2026','stone','Atmospheric visualizations that make scale, shadow, and material decisions legible before construction.']]
-const visual=t=>` + '`' + `<div class="project-visual \${t}" role="img" aria-label="Architectural placeholder visual"><span class="gridline v1"></span><span class="gridline v2"></span><span class="gridline h1"></span><span class="gridline h2"></span><div class="mass mass-a"></div><div class="mass mass-b"></div><div class="mass mass-c"></div><div class="sun-slice"></div><div class="caption-line">replaceable project visual</div></div>` + '`' + `
-document.getElementById('project-grid').innerHTML=projects.map(p=>` + '`' + `<button class="project-card reveal">\${visual(p[3])}<span class="project-meta">\${p[1]} · \${p[2]}</span><strong>\${p[0]}</strong><p>\${p[4]}</p></button>` + '`' + `).join('')
+const visual=t=>`<div class="project-visual \${t}" role="img" aria-label="Architectural placeholder visual"><span class="gridline v1"></span><span class="gridline v2"></span><span class="gridline h1"></span><span class="gridline h2"></span><div class="mass mass-a"></div><div class="mass mass-b"></div><div class="mass mass-c"></div><div class="sun-slice"></div><div class="caption-line">replaceable project visual</div></div>`
+document.getElementById('project-grid').innerHTML=projects.map(p=>`<button class="project-card reveal">\${visual(p[3])}<span class="project-meta">\${p[1]} · \${p[2]}</span><strong>\${p[0]}</strong><p>\${p[4]}</p></button>`).join('')
 const services=[['Architecture','Site-responsive homes and spatial concepts developed from climate, proportion, and everyday rituals.'],['Interior Design','Material-led interiors with custom details, calm palettes, lighting strategy, and lived-in refinement.'],['3D Visualization','Cinematic images and walkthrough-ready compositions for confident design decisions and presentations.'],['Consultation','Early-stage guidance for plots, renovations, space planning, feasibility, and design direction.']]
-document.getElementById('services-list').innerHTML=services.map((s,i)=>` + '`' + `<button class="\${i===0?'active':''}" aria-expanded="\${i===0}"><span>0\${i+1}</span><strong>\${s[0]}</strong><p>\${s[1]}</p></button>` + '`' + `).join('')
+document.getElementById('services-list').innerHTML=services.map((s,i)=>`<button class="\${i===0?'active':''}" aria-expanded="\${i===0}"><span>0\${i+1}</span><strong>\${s[0]}</strong><p>\${s[1]}</p></button>`).join('')
 document.querySelectorAll('.service-list button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.service-list button').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-expanded','false')});btn.classList.add('active');btn.setAttribute('aria-expanded','true')}))
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches
 if(!reduced){const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.animate([{opacity:0,transform:'translateY(28px)'},{opacity:1,transform:'translateY(0)'}],{duration:700,easing:'cubic-bezier(.2,.8,.2,1)',fill:'both'})}),{threshold:.14});document.querySelectorAll('.reveal,.fade').forEach(el=>io.observe(el))}
@@ -39,6 +38,6 @@ import('https://esm.sh/three@0.179.1').then(THREE=>{const mount=document.getElem
 await writeFile(new URL('assets/main.js', dist), js)
 
 let html = await readFile(new URL('../index.html', import.meta.url), 'utf8')
-html = html.replace('<script type="module" src="/src/main.jsx"></script>', '<link rel="stylesheet" href="/assets/main.css"><script type="module" src="/assets/main.js"></script>')
+html = html.replace('<script type="module" src="/src/main.jsx"></script>', '<link rel="stylesheet" href="./assets/main.css"><script type="module" src="./assets/main.js"></script>')
 await writeFile(new URL('index.html', dist), html)
 console.log('Built production assets in dist/')
