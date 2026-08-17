@@ -28,23 +28,76 @@ export default function App() {
     if (prefersReducedMotion || is404) return undefined
 
     const context = gsap.context(() => {
-      gsap.from('.reveal-title span', { yPercent: 105, opacity: 0, duration: 1.15, ease: 'power4.out', stagger: 0.075 })
-      gsap.from('.hero .fade', { y: 22, opacity: 0, duration: 0.9, delay: 0.35, stagger: 0.08, ease: 'power3.out' })
+      // Softer entrance motion: slower acceleration/deceleration and smaller travel distance.
+      gsap.from('.reveal-title span', {
+        yPercent: 70,
+        opacity: 0,
+        duration: 1.45,
+        ease: 'power2.out',
+        stagger: 0.11,
+        force3D: true,
+      })
+
+      gsap.from('.hero .fade', {
+        y: 14,
+        opacity: 0,
+        duration: 1.15,
+        delay: 0.42,
+        stagger: 0.1,
+        ease: 'power2.out',
+        force3D: true,
+      })
 
       gsap.utils.toArray('.reveal').forEach((element) => {
-        gsap.from(element, { scrollTrigger: { trigger: element, start: 'top 84%' }, y: 44, opacity: 0, duration: 0.9, ease: 'power3.out' })
+        gsap.from(element, {
+          scrollTrigger: {
+            trigger: element,
+            start: 'top 86%',
+            once: true,
+            fastScrollEnd: true,
+          },
+          y: 24,
+          opacity: 0,
+          duration: 1.05,
+          ease: 'power2.out',
+          force3D: true,
+        })
       })
 
       gsap.utils.toArray('.project-card').forEach((card) => {
         const visual = card.querySelector('.project-visual')
-        gsap.to(visual, { scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: 0.8 }, yPercent: -7, ease: 'none' })
+        if (!visual) return
+        gsap.to(visual, {
+          scrollTrigger: {
+            trigger: card,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1.35,
+            invalidateOnRefresh: true,
+          },
+          yPercent: -4,
+          ease: 'none',
+          force3D: true,
+        })
       })
 
       gsap.to('.process-line', {
-        scrollTrigger: { trigger: '.process', start: 'top 72%', end: 'bottom 70%', scrub: 1 },
+        scrollTrigger: {
+          trigger: '.process',
+          start: 'top 72%',
+          end: 'bottom 70%',
+          scrub: 1.5,
+          invalidateOnRefresh: true,
+        },
         scaleY: 1,
         transformOrigin: 'top',
+        ease: 'none',
       })
+
+      // Let ScrollTrigger recalculate after mobile browser viewport changes.
+      const refresh = () => ScrollTrigger.refresh()
+      window.addEventListener('load', refresh, { once: true })
+      setTimeout(refresh, 250)
     }, rootRef)
 
     return () => context.revert()
