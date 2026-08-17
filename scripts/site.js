@@ -15,6 +15,8 @@ const services = [
   ['04', 'Planning & Consultation', 'Plot planning, feasibility, space planning and design direction from first idea to execution.']
 ];
 
+const heroVideoUrl = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_094631_d30ab262-45ee-4b7d-99f3-5d5848c8ef13.mp4';
+
 root.innerHTML = `
 <div class="site-shell" id="top">
   <div class="loader" id="loader"><div class="loader-mark">U+</div><div class="loader-line"><span></span></div><p>URBAN PLUS / ARCHITECTURE</p></div>
@@ -29,7 +31,9 @@ root.innerHTML = `
 
   <main>
     <section class="hero3d" id="hero" aria-labelledby="hero-title">
+      <video id="hero-background-video" class="hero-background-video" src="${heroVideoUrl}" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
       <canvas id="architecture-canvas" aria-hidden="true"></canvas>
+      <div class="hero-video-tint" aria-hidden="true"></div>
       <div class="hero-noise" aria-hidden="true"></div>
       <div class="hero-vignette" aria-hidden="true"></div>
       <div class="hero-grid" aria-hidden="true"></div>
@@ -89,6 +93,18 @@ document.getElementById('service-stack').innerHTML = services.map(([num, title, 
 
 document.getElementById('project-list').innerHTML = projects.map((p, i) => `<article class="project reveal" tabindex="0"><div class="project-image"><img src="${p.image}" alt="${p.name} architectural project" loading="${i === 0 ? 'eager' : 'lazy'}"><div class="project-shade"></div></div><div class="project-index">0${i + 1}</div><div class="project-copy"><span>${p.category} · ${p.year}</span><h3>${p.name}</h3><p>${p.text}</p><a href="#contact">Discuss a similar project <b>↗</b></a></div></article>`).join('');
 
+const heroStyle = document.createElement('style');
+heroStyle.textContent = `
+.hero-background-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;filter:saturate(.82) contrast(1.05) brightness(.72);transform:scale(1.035);transition:transform 1.2s cubic-bezier(.2,.8,.2,1),filter .8s ease;}
+.hero3d:hover .hero-background-video{transform:scale(1.06);filter:saturate(.9) contrast(1.08) brightness(.78);}
+.hero-video-tint{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(5,8,18,.82) 0%,rgba(5,8,18,.48) 42%,rgba(5,8,18,.18) 72%,rgba(5,8,18,.58) 100%),linear-gradient(180deg,rgba(5,8,18,.42),transparent 35%,rgba(5,8,18,.82));mix-blend-mode:normal;}
+#architecture-canvas{z-index:2!important;opacity:.72;mix-blend-mode:screen;}
+.hero-noise,.hero-vignette,.hero-grid{z-index:3!important;}
+.hero-copy,.hero-side-note,.hero-bottom,.hero-progress{z-index:5!important;}
+@media(max-width:720px){.hero-background-video{object-position:center;filter:saturate(.76) contrast(1.03) brightness(.58);}.hero-video-tint{background:linear-gradient(180deg,rgba(5,8,18,.52),rgba(5,8,18,.25) 35%,rgba(5,8,18,.9) 100%);}#architecture-canvas{opacity:.45;}}
+`;
+document.head.appendChild(heroStyle);
+
 const nav = document.querySelector('.navbar');
 const menuToggle = document.getElementById('menu-toggle');
 const navLinks = document.getElementById('nav-links');
@@ -109,6 +125,8 @@ function updateScroll() {
   document.documentElement.style.setProperty('--scroll', progress.toFixed(4));
   nav.style.setProperty('--nav-alpha', Math.min(.86, .08 + Math.min(y, 180) / 180 * .78).toFixed(2));
   nav.style.setProperty('--nav-blur', `${10 + Math.min(y, 180) / 180 * 20}px`);
+  const video = document.getElementById('hero-background-video');
+  if (video) { video.style.transform = `scale(${1.035 + Math.min(progress,1)*.035}) translate3d(${(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--mx'))||0)*-4}px,${(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--my'))||0)*-3}px,0)`; }
   lastScroll = y;
 }
 window.addEventListener('scroll', () => requestAnimationFrame(updateScroll), { passive: true });
@@ -180,4 +198,6 @@ async function boot3D() {
 }
 boot3D();
 
+const video = document.getElementById('hero-background-video');
+if (video) { video.play().catch(() => {}); video.addEventListener('canplay', () => video.classList.add('ready'), { once: true }); }
 setTimeout(() => document.getElementById('loader')?.classList.add('done'), 1800);
