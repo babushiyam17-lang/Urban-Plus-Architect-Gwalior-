@@ -1,13 +1,23 @@
-.project-3d-visual{position:relative!important;isolation:isolate;overflow:hidden!important;min-height:100%;background:radial-gradient(circle at 50% 25%,#27364a 0%,#111822 58%,#070b11 100%);border-radius:inherit}
-.project-3d-photo{position:absolute;inset:-8%;z-index:0;background-image:var(--project-image);background-size:cover;background-position:center;filter:grayscale(.3) blur(12px);opacity:.11;transform:scale(1.08)}
-.project-3d-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:2;pointer-events:none}
-.project-3d-vignette{position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(circle at 50% 42%,transparent 0%,rgba(5,8,13,.06) 44%,rgba(4,7,12,.82) 100%),linear-gradient(180deg,rgba(5,8,13,.05),rgba(5,8,13,.7) 100%)}
-.project-3d-scan{position:absolute;left:-20%;right:-20%;top:-20%;height:2px;z-index:4;background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);box-shadow:0 0 28px rgba(255,255,255,.35);opacity:.35;transform:rotate(-4deg);animation:project3dScan 6s ease-in-out infinite}
-.project-3d-label{position:absolute;z-index:5;left:24px;right:24px;top:22px;display:flex;justify-content:space-between;align-items:center;color:rgba(255,255,255,.86);font-size:10px;font-weight:800;letter-spacing:.22em;text-shadow:0 2px 14px rgba(0,0,0,.45);pointer-events:none}
-.project-3d-label b{font-size:12px;letter-spacing:.16em;font-weight:700;color:rgba(255,255,255,.58)}
-.project-3d-caption{position:absolute;z-index:5;left:24px;bottom:20px;color:rgba(255,255,255,.62);font-size:9px;letter-spacing:.2em;text-transform:uppercase;pointer-events:none}
-.project-3d-visual:after{content:'';position:absolute;inset:14px;z-index:5;border:1px solid rgba(255,255,255,.16);border-radius:22px;pointer-events:none}
-.project-card:hover .project-3d-canvas,.project-3d-visual:hover .project-3d-canvas{filter:saturate(1.12) brightness(1.06)}
-@keyframes project3dScan{0%{transform:translateY(-30vh) rotate(-4deg);opacity:0}15%{opacity:.45}55%{opacity:.12}100%{transform:translateY(80vh) rotate(-4deg);opacity:0}}
-@media(max-width:800px){.project-3d-label{left:18px;right:18px;top:18px}.project-3d-caption{left:18px;bottom:17px}.project-3d-visual:after{inset:10px;border-radius:20px}}
-@media(prefers-reduced-motion:reduce){.project-3d-scan{animation:none}.project-3d-canvas{filter:none!important}}
+.project-3d-visual{position:relative!important;isolation:isolate;overflow:hidden!important;min-height:100%;background:radial-gradient(circle at 50% 25%,#eef0ed 0%,#c9d0cd 48%,#6f7777 100%);border-radius:inherit;perspective:900px}
+.project-3d-photo{position:absolute;inset:-8%;z-index:0;background-image:var(--project-image);background-size:cover;background-position:center;filter:saturate(.82) contrast(1.02);opacity:.34;transform:scale(1.08);transition:transform 1.2s cubic-bezier(.2,.8,.2,1),opacity .7s ease}
+.project-card:hover .project-3d-photo{transform:scale(1.14);opacity:.48}
+.project-3d-depth{position:absolute;inset:0;z-index:2;transform-style:preserve-3d;transform:translate3d(var(--float-x),var(--float-y),0) rotateZ(var(--tilt));pointer-events:none}
+.depth-plane{position:absolute;border:1px solid rgba(255,255,255,.28);background:linear-gradient(135deg,rgba(255,255,255,.20),rgba(255,255,255,.03));box-shadow:0 20px 60px rgba(16,25,31,.16);transform-style:preserve-3d}
+.plane-back{width:68%;height:48%;right:-7%;top:14%;transform:rotateY(-24deg) rotateX(10deg) translateZ(-50px);border-radius:24px}
+.plane-mid{width:54%;height:54%;left:8%;top:24%;transform:rotateY(22deg) rotateX(7deg) translateZ(-15px);border-radius:20px}
+.depth-building{position:absolute;bottom:7%;background:linear-gradient(90deg,rgba(38,51,60,.94),rgba(126,142,143,.78));border:1px solid rgba(255,255,255,.28);box-shadow:18px 28px 50px rgba(10,16,20,.18);transform-style:preserve-3d;clip-path:polygon(0 6%,100% 0,100% 100%,0 100%)}
+.depth-building:before{content:'';position:absolute;inset:8% 10%;background:repeating-linear-gradient(90deg,transparent 0 12px,rgba(225,239,239,.55) 13px 15px),repeating-linear-gradient(0deg,transparent 0 14px,rgba(225,239,239,.38) 15px 17px);opacity:.55}
+.depth-building:after{content:'';position:absolute;left:8%;right:8%;top:10%;height:3px;background:var(--accent);box-shadow:0 18px 0 rgba(255,255,255,.15),0 36px 0 rgba(255,255,255,.1);opacity:.8}
+.building-a{width:15%;height:38%;left:7%;transform:translateZ(45px) rotateY(22deg)}
+.building-b{width:19%;height:52%;left:25%;transform:translateZ(85px) rotateY(16deg)}
+.building-c{width:17%;height:44%;right:24%;transform:translateZ(58px) rotateY(-16deg)}
+.building-tower{width:22%;height:74%;right:6%;bottom:4%;background:linear-gradient(90deg,var(--secondary),rgba(46,63,74,.9));transform:translateZ(105px) rotateY(-20deg);clip-path:polygon(14% 0,86% 7%,100% 100%,0 100%)}
+.project-3d-grid{position:absolute;inset:48% -10% -18%;z-index:1;background:linear-gradient(rgba(255,255,255,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.18) 1px,transparent 1px);background-size:32px 32px;transform:perspective(500px) rotateX(63deg);transform-origin:center top;opacity:.24;pointer-events:none}
+.project-3d-vignette{position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(circle at 50% 40%,transparent 0%,rgba(15,22,27,.04) 44%,rgba(15,22,27,.66) 100%),linear-gradient(180deg,rgba(255,255,255,.03),rgba(10,15,20,.58) 100%)}
+.project-3d-scan{position:absolute;left:-20%;right:-20%;top:-20%;height:2px;z-index:4;background:linear-gradient(90deg,transparent,var(--accent),transparent);box-shadow:0 0 28px var(--accent);opacity:.42;transform:rotate(-4deg);animation:project3dScan 6s ease-in-out infinite}
+.project-3d-label{position:absolute;z-index:5;left:24px;right:24px;top:22px;display:flex;justify-content:space-between;align-items:center;color:#fff;font-size:10px;font-weight:800;letter-spacing:.22em;text-shadow:0 2px 14px rgba(0,0,0,.45);pointer-events:none}.project-3d-label b{font-size:12px;letter-spacing:.16em;font-weight:700;color:rgba(255,255,255,.7)}
+.project-3d-caption{position:absolute;z-index:5;left:24px;bottom:20px;color:rgba(255,255,255,.72);font-size:9px;letter-spacing:.2em;text-transform:uppercase;pointer-events:none}
+.project-3d-visual:after{content:'';position:absolute;inset:14px;z-index:5;border:1px solid rgba(255,255,255,.3);border-radius:22px;pointer-events:none}
+@keyframes project3dScan{0%{transform:translateY(-30vh) rotate(-4deg);opacity:0}15%{opacity:.5}55%{opacity:.14}100%{transform:translateY(80vh) rotate(-4deg);opacity:0}}
+@media(max-width:800px){.project-3d-label{left:18px;right:18px;top:18px}.project-3d-caption{left:18px;bottom:17px}.project-3d-visual:after{inset:10px;border-radius:20px}.building-a{width:16%;height:32%}.building-b{width:20%;height:46%}.building-c{width:18%;height:40%}.building-tower{width:24%;height:66%}}
+@media(prefers-reduced-motion:reduce){.project-3d-scan{animation:none}.project-3d-depth{transform:none}}
