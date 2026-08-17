@@ -1,0 +1,13 @@
+.project-3d-visual{position:relative!important;isolation:isolate;overflow:hidden!important;min-height:100%;background:radial-gradient(circle at 50% 25%,#27364a 0%,#111822 58%,#070b11 100%);border-radius:inherit}
+.project-3d-photo{position:absolute;inset:-8%;z-index:0;background-image:var(--project-image);background-size:cover;background-position:center;filter:grayscale(.3) blur(12px);opacity:.11;transform:scale(1.08)}
+.project-3d-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:2;pointer-events:none}
+.project-3d-vignette{position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(circle at 50% 42%,transparent 0%,rgba(5,8,13,.06) 44%,rgba(4,7,12,.82) 100%),linear-gradient(180deg,rgba(5,8,13,.05),rgba(5,8,13,.7) 100%)}
+.project-3d-scan{position:absolute;left:-20%;right:-20%;top:-20%;height:2px;z-index:4;background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);box-shadow:0 0 28px rgba(255,255,255,.35);opacity:.35;transform:rotate(-4deg);animation:project3dScan 6s ease-in-out infinite}
+.project-3d-label{position:absolute;z-index:5;left:24px;right:24px;top:22px;display:flex;justify-content:space-between;align-items:center;color:rgba(255,255,255,.86);font-size:10px;font-weight:800;letter-spacing:.22em;text-shadow:0 2px 14px rgba(0,0,0,.45);pointer-events:none}
+.project-3d-label b{font-size:12px;letter-spacing:.16em;font-weight:700;color:rgba(255,255,255,.58)}
+.project-3d-caption{position:absolute;z-index:5;left:24px;bottom:20px;color:rgba(255,255,255,.62);font-size:9px;letter-spacing:.2em;text-transform:uppercase;pointer-events:none}
+.project-3d-visual:after{content:'';position:absolute;inset:14px;z-index:5;border:1px solid rgba(255,255,255,.16);border-radius:22px;pointer-events:none}
+.project-card:hover .project-3d-canvas,.project-3d-visual:hover .project-3d-canvas{filter:saturate(1.12) brightness(1.06)}
+@keyframes project3dScan{0%{transform:translateY(-30vh) rotate(-4deg);opacity:0}15%{opacity:.45}55%{opacity:.12}100%{transform:translateY(80vh) rotate(-4deg);opacity:0}}
+@media(max-width:800px){.project-3d-label{left:18px;right:18px;top:18px}.project-3d-caption{left:18px;bottom:17px}.project-3d-visual:after{inset:10px;border-radius:20px}}
+@media(prefers-reduced-motion:reduce){.project-3d-scan{animation:none}.project-3d-canvas{filter:none!important}}
