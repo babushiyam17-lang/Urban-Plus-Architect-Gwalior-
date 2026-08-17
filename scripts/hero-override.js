@@ -5,8 +5,12 @@
   hero.setAttribute('aria-labelledby','hero-title-spec');
   hero.innerHTML = `
     <div class="hero-sticky-spec">
+      <video class="hero-video-spec" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+        <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_094631_d30ab262-45ee-4b7d-99f3-5d5848c8ef13.mp4" type="video/mp4">
+      </video>
       <div class="hero-layer-spec hero-outline-spec"><img src="https://strvid.nyc3.cdn.digitaloceanspaces.com/cloudinary/hero_city_outline_fzg37d.jpg" alt="Architectural city outline" /></div>
       <div class="hero-layer-spec hero-reality-spec"><img src="https://strvid.nyc3.cdn.digitaloceanspaces.com/cloudinary/hero_city_iglhwn.jpg" alt="Realistic city skyline" /></div>
+      <div class="hero-video-overlay-spec"></div>
       <div class="hero-gradient-spec"></div>
       <div class="hero-copy-spec">
         <span class="spec-eyebrow">Urban Plus / Architecture Studio</span>
@@ -23,7 +27,10 @@
   const outlineTitle = hero.querySelector('.spec-outline-title');
   const realityTitle = hero.querySelector('.spec-reality-title');
   const progress = hero.querySelector('.spec-progress i');
+  const video = hero.querySelector('.hero-video-spec');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  video.play().catch(() => {});
 
   function update() {
     const rect = hero.getBoundingClientRect();
