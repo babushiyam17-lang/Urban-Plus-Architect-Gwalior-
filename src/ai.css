@@ -1,0 +1,19 @@
+.ai-studio{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);gap:28px;align-items:stretch;background:radial-gradient(circle at 75% 35%,rgba(0,240,255,.08),transparent 28%),radial-gradient(circle at 20% 70%,rgba(176,38,255,.08),transparent 32%)}
+.ai-copy,.ai-cards article{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.045);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:30px}
+.ai-copy{padding:clamp(28px,5vw,58px);display:flex;flex-direction:column;justify-content:center;min-height:520px}
+.ai-copy h2{margin:15px 0 22px;font-size:clamp(44px,6.5vw,86px);line-height:.94;letter-spacing:-.065em;font-weight:900}
+.ai-copy .lead{max-width:650px;color:var(--gray300);line-height:1.65;font-weight:300}
+.ai-copy .button{margin-top:30px;width:max-content}
+.ai-cards{display:grid;grid-template-rows:repeat(3,1fr);gap:14px}
+.ai-cards article{padding:28px;position:relative;overflow:hidden;transition:transform .45s cubic-bezier(.25,1,.5,1),border-color .45s ease,background .45s ease}
+.ai-cards article::after{content:'';position:absolute;width:160px;height:160px;right:-75px;top:-75px;border-radius:50%;background:radial-gradient(circle,rgba(0,240,255,.2),transparent 68%);filter:blur(4px)}
+.ai-cards article:nth-child(2)::after{background:radial-gradient(circle,rgba(176,38,255,.2),transparent 68%)}
+.ai-cards article:nth-child(3)::after{background:radial-gradient(circle,rgba(255,255,255,.14),transparent 68%)}
+.ai-cards article:hover{transform:translateX(-7px);border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.075)}
+.ai-cards span{display:block;color:var(--blue);font-size:11px;font-weight:800;letter-spacing:.2em;margin-bottom:34px}
+.ai-cards article:nth-child(2) span{color:var(--purple)}
+.ai-cards strong{display:block;font-size:clamp(24px,3vw,36px);letter-spacing:-.04em}
+.ai-cards p{margin:10px 0 0;color:var(--gray400);line-height:1.55;font-weight:300;max-width:360px}
+.form-success{margin:14px 0 0;color:#b9f9ff;font-size:13px;line-height:1.5}
+@media(max-width:800px){.ai-studio{grid-template-columns:1fr}.ai-copy{min-height:auto}.ai-cards{grid-template-rows:none}.ai-cards article{min-height:190px}}
+@media(max-width:520px){.ai-copy{padding:24px}.ai-copy h2{font-size:43px}.ai-cards article{padding:23px}.ai-cards span{margin-bottom:22px}}
