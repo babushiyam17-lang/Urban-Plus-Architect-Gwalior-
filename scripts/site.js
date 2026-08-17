@@ -1,238 +1,183 @@
 const root = document.getElementById('root');
 
 const projects = [
-  {
-    name: 'Courtyard House',
-    category: 'Residential Architecture',
-    year: '2026',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=85',
-    text: 'A calm contemporary residence organized around light, landscape and a private courtyard.'
-  },
-  {
-    name: 'Monumental Residence',
-    category: 'Luxury Residence',
-    year: '2025',
-    image: 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1800&q=85',
-    text: 'A refined home with strong volumes, deep openings and a timeless architectural material palette.'
-  },
-  {
-    name: 'Casa 27',
-    category: 'Interior Design',
-    year: '2025',
-    image: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1800&q=85',
-    text: 'Warm interiors shaped through natural materials, custom furniture and layered ambient light.'
-  },
-  {
-    name: 'Light & Stone',
-    category: 'Architectural Visualization',
-    year: '2026',
-    image: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1800&q=85',
-    text: 'An atmospheric architectural study where material, shadow and natural light define the experience.'
-  },
-  {
-    name: 'Urban Residence',
-    category: 'Contemporary Architecture',
-    year: '2026',
-    image: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=1800&q=85',
-    text: 'A contemporary composition balancing privacy, openness, landscape and generous natural light.'
-  }
+  { name: 'Courtyard House', category: 'Residential', year: '2026', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=88', text: 'A calm contemporary residence organized around light, landscape and a private courtyard.' },
+  { name: 'Monumental Residence', category: 'Luxury Residence', year: '2025', image: 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=2000&q=88', text: 'Strong volumes, deep openings and a restrained palette create a timeless family home.' },
+  { name: 'Casa 27', category: 'Interior Design', year: '2025', image: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=2000&q=88', text: 'Warm timber, stone and layered light shape an interior designed for everyday rituals.' },
+  { name: 'Light & Stone', category: '3D Visualization', year: '2026', image: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=2000&q=88', text: 'Atmospheric visualization where scale, shadow and material make design decisions tangible.' },
+  { name: 'Urban Residence', category: 'Contemporary', year: '2026', image: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=2000&q=88', text: 'A precise composition balancing privacy, openness, landscape and natural light.' }
 ];
 
 const services = [
-  ['UI/UX', 'Interface systems, journeys and interactions that make complex products feel effortless.', '✦'],
-  ['Visual Graphic', 'Distinctive visual identities, campaigns and motion-ready graphic systems.', '◈'],
-  ['Strategy', 'Positioning, digital direction and creative strategy aligned to ambitious business goals.', '◎'],
-  ['Business Growth', 'Conversion-focused digital experiences designed to create measurable momentum.', '↗']
-];
-
-const clients = [
-  ['Camera', 'Instagram'], ['ShoppingBag', 'Shopify'], ['Hexagon', 'HubSpot'],
-  ['Tv', 'CNBC'], ['Globe2', 'BUSINESS INSIDER'], ['CreditCard', 'stripe']
+  ['01', 'Architecture', 'Site-responsive homes, villas and commercial spaces shaped around climate, context and everyday life.'],
+  ['02', 'Interior Design', 'Material-led interiors with custom details, lighting strategy and a calm, lasting visual language.'],
+  ['03', '3D Visualization', 'Photorealistic architectural imagery and walkthrough-ready scenes that let you experience the design early.'],
+  ['04', 'Planning & Consultation', 'Plot planning, feasibility, space planning and design direction from first idea to execution.']
 ];
 
 root.innerHTML = `
 <div class="site-shell" id="top">
+  <div class="loader" id="loader"><div class="loader-mark">U+</div><div class="loader-line"><span></span></div><p>URBAN PLUS / ARCHITECTURE</p></div>
   <header class="navbar-wrap">
     <nav class="navbar" aria-label="Primary navigation">
-      <a class="brand" href="#top" aria-label="Urban Plus Architect home"><span class="brand-mark">U+</span><span>Urban Plus</span></a>
-      <div class="nav-links" id="nav-links">
-        <a href="#services">Services<span></span></a>
-        <a href="#work">Work<span></span></a>
-        <a href="#agency">Agency<span></span></a>
-        <a href="#contact">Contact<span></span></a>
-      </div>
-      <a class="nav-cta" href="#contact">Start Project</a>
+      <a class="brand" href="#top"><span class="brand-mark">U+</span><span>Urban Plus</span></a>
+      <div class="nav-links" id="nav-links"><a href="#services">Services<span></span></a><a href="#work">Work<span></span></a><a href="#studio">Studio<span></span></a><a href="#contact">Contact<span></span></a></div>
+      <a class="nav-cta" href="#contact">Start a project <b>↗</b></a>
       <button class="menu-toggle" id="menu-toggle" aria-label="Open navigation menu" aria-expanded="false"><i></i><i></i></button>
     </nav>
   </header>
 
   <main>
-    <section class="hero-scroll" id="hero" aria-label="Urban Plus introduction">
-      <div class="hero-sticky">
-        <div class="hero-media hero-outline">
-          <img src="https://strvid.nyc3.cdn.digitaloceanspaces.com/cloudinary/hero_city_outline_fzg37d.jpg" alt="Architectural city outline sketch" fetchpriority="high">
-          <div class="hero-shade"></div>
-        </div>
-        <div class="hero-media hero-reality">
-          <img src="https://strvid.nyc3.cdn.digitaloceanspaces.com/cloudinary/hero_city_iglhwn.jpg" alt="Realistic modern city skyline" fetchpriority="high">
-          <div class="hero-shade"></div>
-        </div>
-        <div class="hero-copy">
-          <p class="eyebrow">Urban Plus Architecture · Gwalior / India</p>
-          <h1><span class="hero-outline-title">Imagine the Future</span><span class="hero-reality-title">Build the Reality</span></h1>
-          <p class="hero-subtitle">We create bold digital experiences and intelligent design systems for ambitious businesses.</p>
-          <a class="pill-button hero-button" href="#work">Explore our work <b>↗</b></a>
-        </div>
-        <div class="scroll-cue"><span>Scroll to reveal</span><b>⌄</b></div>
-        <div class="hero-progress"><span></span></div>
+    <section class="hero3d" id="hero" aria-labelledby="hero-title">
+      <canvas id="architecture-canvas" aria-hidden="true"></canvas>
+      <div class="hero-noise" aria-hidden="true"></div>
+      <div class="hero-vignette" aria-hidden="true"></div>
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <div class="eyebrow-row"><span class="eyebrow">Architecture / Interiors / Visualization</span><span class="hero-location">Gwalior · India</span></div>
+        <h1 id="hero-title"><span>We shape</span><span class="outline-text">spaces that</span><span>stay with you.</span></h1>
+        <p>Architecture with clarity, atmosphere and intent — designed around the way people actually live.</p>
+        <div class="hero-actions"><a class="pill-button gold" href="#work">Explore selected work <b>↗</b></a><a class="quiet-link" href="#studio">Our approach <span>↓</span></a></div>
       </div>
+      <div class="hero-side-note"><span>01</span><span>Interactive spatial study</span></div>
+      <div class="hero-bottom"><span>Scroll to explore</span><i></i><span>Since 2012</span></div>
+      <div class="hero-progress"><span></span></div>
     </section>
 
-    <section class="clients section-pad" aria-label="Clients">
-      <div class="section-top reveal">
-        <div><span class="tiny-pill">Interested</span><h2>Trusted by <em>300+</em> businesses</h2></div>
-        <p>We partner with teams that want to move faster, look sharper and build what is next.</p>
-      </div>
-      <div class="ticker-mask">
-        <div class="ticker-track">
-          <div class="logo-row" id="logo-row"></div>
-          <div class="logo-row" id="logo-row-copy" aria-hidden="true"></div>
-        </div>
-      </div>
+    <section class="manifesto section-pad" id="studio">
+      <div class="manifesto-mark reveal">UP<span>01</span></div>
+      <div class="manifesto-copy reveal"><span class="eyebrow">A different way to build</span><h2>Good architecture is felt <em>before</em> it is explained.</h2><p>Urban Plus Architect & Associates creates spaces that feel considered from the first step inside. We combine architectural discipline with a strong eye for light, proportion, material and detail.</p><a class="text-link" href="#contact">Tell us about your project <span>↗</span></a></div>
     </section>
 
     <section class="services section-pad" id="services">
-      <div class="section-heading reveal">
-        <span class="eyebrow">What we do</span>
-        <h2>Services built specifically<br><span>for your business.</span></h2>
-      </div>
-      <div class="service-grid" id="service-grid"></div>
+      <div class="section-head reveal"><div><span class="eyebrow">Capabilities</span><h2>One studio.<br><em>Complete thinking.</em></h2></div><p>From first sketch to final visual, we keep the design language consistent — so every decision belongs to the same story.</p></div>
+      <div class="service-stack" id="service-stack"></div>
     </section>
 
     <section class="work section-pad" id="work">
-      <div class="section-top reveal">
-        <div><span class="eyebrow">Selected work</span><h2>Our Works</h2></div>
-        <a class="text-link" href="#contact">View All Projects <span>↗</span></a>
-      </div>
-      <div class="work-gallery" id="work-gallery"></div>
+      <div class="section-head reveal"><div><span class="eyebrow">Selected projects</span><h2>Built ideas.</h2></div><p>Residential architecture, interiors and visual studies from our evolving portfolio.</p></div>
+      <div class="project-list" id="project-list"></div>
     </section>
 
-    <section class="agency section-pad" id="agency">
-      <div class="agency-glow"></div>
-      <div class="agency-grid">
-        <div class="reveal"><span class="eyebrow">The agency</span><h2>Design is not just what it looks like.<br><span>It's how it feels.</span></h2></div>
-        <div class="agency-copy reveal">
-          <p class="large-copy">Urban Plus Architecture brings strategy, visual design and technology together to make brands feel premium, useful and impossible to ignore.</p>
-          <p>Every detail is considered — from the first impression to the smallest interaction — so the final experience feels simple, confident and distinctly yours.</p>
-          <div class="stats"><div><strong>10+</strong><span>Years Experience</span></div><div><strong>150+</strong><span>Global Clients</span></div></div>
-        </div>
+    <section class="statement">
+      <div class="statement-bg"></div><div class="statement-copy reveal"><span class="eyebrow">The Urban Plus point of view</span><h2>Less noise.<br><span>More meaning.</span></h2><p>We believe premium design is not about adding more. It is about making every element earn its place.</p></div>
+    </section>
+
+    <section class="process section-pad">
+      <div class="section-head reveal"><div><span class="eyebrow">The process</span><h2>From idea<br><em>to atmosphere.</em></h2></div></div>
+      <div class="process-grid">
+        <article class="process-card reveal"><span>01</span><h3>Discover</h3><p>We understand the site, brief, budget, lifestyle and the feeling the project needs to create.</p></article>
+        <article class="process-card reveal"><span>02</span><h3>Develop</h3><p>Plans, massing, materials and details evolve through a clear sequence of design decisions.</p></article>
+        <article class="process-card reveal"><span>03</span><h3>Visualize</h3><p>3D imagery and spatial studies make the future space tangible before construction begins.</p></article>
+        <article class="process-card reveal"><span>04</span><h3>Deliver</h3><p>We translate the concept into coordinated drawings, details and a confident execution path.</p></article>
       </div>
     </section>
 
     <section class="contact section-pad" id="contact">
-      <div class="contact-inner reveal">
-        <span class="eyebrow">Let's work together</span>
-        <h2>Let's create<br><span>something epic.</span></h2>
-        <a class="pill-button light-button" href="mailto:urbanplusarchitect@gmail.com">Start a Project <b>↗</b></a>
-      </div>
-      <div class="contact-orb" aria-hidden="true"></div>
+      <div class="contact-orbit" aria-hidden="true"></div><div class="contact-copy reveal"><span class="eyebrow">Start a conversation</span><h2>Have a space<br><em>in mind?</em></h2><p>Tell us what you are building. We will help you find the clearest way forward.</p><div class="contact-actions"><a class="pill-button gold" href="tel:+918770926307">Call 87709 26307 <b>↗</b></a><a class="text-link" href="mailto:urban.plusgwl@gmail.com">urban.plusgwl@gmail.com <span>↗</span></a></div></div><div class="contact-card reveal"><span>Studio</span><strong>A 81, Aditya Puram</strong><p>Near opposite to DD Nagar<br>Gwalior, Madhya Pradesh 474005</p><a href="https://www.google.com/maps/search/?api=1&query=A+81+Aditya+Puram+Gwalior+Madhya+Pradesh+474005" target="_blank" rel="noreferrer">Open in Maps ↗</a></div>
     </section>
   </main>
 
   <footer class="footer section-pad">
-    <div class="footer-grid">
-      <div class="footer-brand"><a class="brand" href="#top"><span class="brand-mark">U+</span><span>Urban Plus</span></a><p>Architecture, interiors, visual design and digital experiences from Gwalior, India.</p></div>
-      <div><span class="footer-label">Explore</span><a href="#services">Services</a><a href="#work">Work</a><a href="#agency">Agency</a><a href="#contact">Contact</a></div>
-      <div><span class="footer-label">Social</span><a href="#contact">Instagram</a><a href="#contact">LinkedIn</a><a href="#contact">Behance</a><a href="#contact">Dribbble</a></div>
-      <div><span class="footer-label">Connect</span><a href="mailto:urbanplusarchitect@gmail.com">Email us</a><span>Gwalior, India</span></div>
-    </div>
-    <div class="footer-bottom"><span>© 2026 Urban Plus Architecture. All rights reserved.</span><div><a href="#top">Privacy Policy</a><a href="#top">Terms of Service</a></div></div>
+    <div class="footer-top"><a class="brand" href="#top"><span class="brand-mark">U+</span><span>Urban Plus</span></a><p>Architecture / Interiors / 3D Visualization</p></div>
+    <div class="footer-grid"><div><span class="footer-label">Explore</span><a href="#services">Services</a><a href="#work">Work</a><a href="#studio">Studio</a><a href="#contact">Contact</a></div><div><span class="footer-label">Connect</span><a href="tel:+918770926307">87709 26307</a><a href="mailto:urban.plusgwl@gmail.com">urban.plusgwl@gmail.com</a><span>Gwalior, India</span></div><div><span class="footer-label">Online</span><a href="https://www.instagram.com/urbanplusarchitect/" target="_blank" rel="noreferrer">Instagram</a><a href="https://urbanplusarchitects.com" target="_blank" rel="noreferrer">Website</a><a href="#contact">WhatsApp</a></div></div>
+    <div class="footer-bottom"><span>© 2026 Urban Plus Architect & Associates</span><span>Designed as an interactive spatial experience</span></div>
   </footer>
 </div>`;
 
-const logoMarkup = clients.map(([icon, name]) => `<div class="client-logo"><span class="logo-icon">${icon === 'Camera' ? '◉' : icon === 'ShoppingBag' ? '◇' : icon === 'Hexagon' ? '⬡' : icon === 'Tv' ? '▣' : icon === 'Globe2' ? '◎' : '◌'}</span><span>${name}</span></div>`).join('');
-document.getElementById('logo-row').innerHTML = logoMarkup;
-document.getElementById('logo-row-copy').innerHTML = logoMarkup;
+document.getElementById('service-stack').innerHTML = services.map(([num, title, text]) => `<article class="service-row reveal"><span class="service-num">${num}</span><h3>${title}</h3><p>${text}</p><a href="#contact" aria-label="Enquire about ${title}">↗</a></article>`).join('');
 
-document.getElementById('service-grid').innerHTML = services.map((s, i) => `
-  <article class="service-card reveal">
-    <div class="corner-icon">${s[2]}</div><span class="service-number">0${i + 1}</span><h3>${s[0]}</h3><p>${s[1]}</p><a href="#contact" aria-label="Learn more about ${s[0]}">Explore <span>↗</span></a>
-  </article>`).join('');
-
-document.getElementById('work-gallery').innerHTML = projects.map((p, i) => `
-  <article class="work-item ${i === 0 ? 'active' : ''} reveal" data-index="${i}" tabindex="0" role="button" aria-label="Open ${p.name} project">
-    <div class="work-image"><img src="${p.image}" alt="${p.name} architectural project photograph" ${i > 0 ? 'loading="lazy"' : ''}><div class="work-overlay"></div></div>
-    <div class="work-content"><span>${p.category} · ${p.year}</span><h3>${p.name}</h3><p>${p.text}</p><a href="#contact">View project <b>↗</b></a></div>
-    <span class="work-index">0${i + 1}</span>
-  </article>`).join('');
+document.getElementById('project-list').innerHTML = projects.map((p, i) => `<article class="project reveal" tabindex="0"><div class="project-image"><img src="${p.image}" alt="${p.name} architectural project" loading="${i === 0 ? 'eager' : 'lazy'}"><div class="project-shade"></div></div><div class="project-index">0${i + 1}</div><div class="project-copy"><span>${p.category} · ${p.year}</span><h3>${p.name}</h3><p>${p.text}</p><a href="#contact">Discuss a similar project <b>↗</b></a></div></article>`).join('');
 
 const nav = document.querySelector('.navbar');
 const menuToggle = document.getElementById('menu-toggle');
 const navLinks = document.getElementById('nav-links');
-menuToggle.addEventListener('click', () => {
-  const open = navLinks.classList.toggle('open');
-  menuToggle.classList.toggle('open', open);
-  menuToggle.setAttribute('aria-expanded', String(open));
-  menuToggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
-  nav.classList.toggle('menu-open', open);
-});
-navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-  navLinks.classList.remove('open'); menuToggle.classList.remove('open'); nav.classList.remove('menu-open'); menuToggle.setAttribute('aria-expanded', 'false');
-}));
+menuToggle.addEventListener('click', () => { const open = navLinks.classList.toggle('open'); menuToggle.classList.toggle('open', open); nav.classList.toggle('menu-open', open); menuToggle.setAttribute('aria-expanded', String(open)); menuToggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu'); });
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { navLinks.classList.remove('open'); menuToggle.classList.remove('open'); nav.classList.remove('menu-open'); menuToggle.setAttribute('aria-expanded','false'); }));
 
-const workItems = [...document.querySelectorAll('.work-item')];
-function activateWork(item) {
-  workItems.forEach(x => x.classList.toggle('active', x === item));
-}
-workItems.forEach(item => {
-  item.addEventListener('mouseenter', () => activateWork(item));
-  item.addEventListener('focus', () => activateWork(item));
-  item.addEventListener('click', e => { if (!e.target.closest('a')) activateWork(item); });
-});
-
-const revealObserver = new IntersectionObserver(entries => entries.forEach(entry => {
-  if (entry.isIntersecting) entry.target.classList.add('visible');
-}), { threshold: 0.12, rootMargin: '0px 0px -80px' });
+const revealObserver = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }), { threshold: 0.1, rootMargin: '0px 0px -70px' });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-const hero = document.getElementById('hero');
-const outline = document.querySelector('.hero-outline');
-const reality = document.querySelector('.hero-reality');
-const realityTitle = document.querySelector('.hero-reality-title');
-const outlineTitle = document.querySelector('.hero-outline-title');
-const heroProgress = document.querySelector('.hero-progress span');
-function updateHero() {
-  const rect = hero.getBoundingClientRect();
-  const total = Math.max(1, hero.offsetHeight - window.innerHeight);
-  const progress = Math.min(1, Math.max(0, -rect.top / total));
-  const clip = 8 + progress * 150;
-  reality.style.clipPath = `circle(${clip}% at 50% 50%)`;
-  reality.style.transform = `scale(${1 + progress * .15})`;
-  realityTitle.style.opacity = String(Math.min(1, progress * 2.3));
-  outlineTitle.style.opacity = String(Math.max(0, 1 - progress * 2));
-  heroProgress.style.transform = `scaleX(${progress})`;
+const projectsEls = [...document.querySelectorAll('.project')];
+projectsEls.forEach((el, index) => { el.addEventListener('mouseenter', () => projectsEls.forEach((x, i) => x.classList.toggle('active', i === index))); el.addEventListener('focus', () => projectsEls.forEach((x, i) => x.classList.toggle('active', i === index))); });
+
+let lastScroll = 0;
+function updateScroll() {
+  const y = window.scrollY;
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = max ? y / max : 0;
+  document.documentElement.style.setProperty('--scroll', progress.toFixed(4));
+  nav.style.setProperty('--nav-alpha', Math.min(.86, .08 + Math.min(y, 180) / 180 * .78).toFixed(2));
+  nav.style.setProperty('--nav-blur', `${10 + Math.min(y, 180) / 180 * 20}px`);
+  lastScroll = y;
 }
+window.addEventListener('scroll', () => requestAnimationFrame(updateScroll), { passive: true });
+updateScroll();
 
-function updateNav() {
-  const y = Math.min(50, window.scrollY);
-  const opacity = 0.02 + (y / 50) * 0.06;
-  nav.style.setProperty('--nav-alpha', opacity.toFixed(3));
-  nav.style.setProperty('--nav-blur', `${8 + (y / 50) * 16}px`);
+window.addEventListener('pointermove', e => { document.documentElement.style.setProperty('--mx', ((e.clientX / innerWidth) - .5).toFixed(3)); document.documentElement.style.setProperty('--my', ((e.clientY / innerHeight) - .5).toFixed(3)); }, { passive: true });
+
+async function boot3D() {
+  const canvas = document.getElementById('architecture-canvas');
+  if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  try {
+    const THREE = await import('https://esm.sh/three@0.179.1');
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x090a09, .075);
+    const camera = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, .1, 100);
+    camera.position.set(4.8, 3.3, 8.8);
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: innerWidth > 720, alpha: true, powerPreference: 'high-performance' });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, innerWidth < 720 ? 1.25 : 1.8));
+    renderer.setSize(innerWidth, innerHeight);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.15;
+
+    scene.add(new THREE.AmbientLight(0xf5ead4, 1.2));
+    const key = new THREE.DirectionalLight(0xffe6b5, 3.4); key.position.set(4, 8, 6); scene.add(key);
+    const rim = new THREE.PointLight(0xd8a85c, 18, 12); rim.position.set(-4, 2, 1); scene.add(rim);
+
+    const architecture = new THREE.Group(); scene.add(architecture);
+    const warm = new THREE.MeshStandardMaterial({ color: 0x8d7759, roughness: .3, metalness: .18 });
+    const dark = new THREE.MeshStandardMaterial({ color: 0x161714, roughness: .2, metalness: .65 });
+    const glass = new THREE.MeshPhysicalMaterial({ color: 0x7b6b54, metalness: .18, roughness: .12, transmission: .16, transparent: true, opacity: .72 });
+    const gold = new THREE.MeshStandardMaterial({ color: 0xc9a86a, metalness: .78, roughness: .22, emissive: 0x2a1c0b, emissiveIntensity: .4 });
+
+    const addBox = (w,h,d,x,y,z,mat) => { const m = new THREE.Mesh(new THREE.BoxGeometry(w,h,d), mat); m.position.set(x,y,z); m.castShadow = true; architecture.add(m); return m; };
+    addBox(4.8,.18,3.1,0,0,0,warm); addBox(4.2,.14,2.6,-.25,.78,.08,dark); addBox(3.6,.12,2.25,.25,1.48,-.04,warm); addBox(2.8,.12,1.8,-.2,2.12,.02,dark); addBox(2.15,.1,1.45,.22,2.7,-.02,warm);
+    [[-2.05,.45,1.15],[2.05,.45,1.15],[-1.7,1.45,1.0],[1.75,1.45,1.0],[-1.35,2.2,.75],[1.3,2.2,.75]].forEach(([x,y,z]) => addBox(.16,1.0,.16,x,y,z,dark));
+    addBox(.1,2.9,1.9,-1.55,1.45,-.92,glass); addBox(.1,2.9,1.9,1.55,1.45,-.92,glass); addBox(3.1,.08,.08,0,2.86,-.95,gold); addBox(3.1,.08,.08,0,.08,-.95,gold);
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(2.1,.018,8,96), gold); ring.rotation.x = Math.PI/2; ring.position.y = .02; architecture.add(ring);
+
+    const particles = new THREE.BufferGeometry(); const count = innerWidth < 720 ? 420 : 900; const positions = new Float32Array(count * 3);
+    for (let i=0;i<count;i++){ const r=THREE.MathUtils.randFloat(5,16), a=Math.random()*Math.PI*2; positions[i*3]=Math.cos(a)*r; positions[i*3+1]=THREE.MathUtils.randFloat(-1,8); positions[i*3+2]=Math.sin(a)*r-3; }
+    particles.setAttribute('position', new THREE.BufferAttribute(positions,3));
+    const points = new THREE.Points(particles,new THREE.PointsMaterial({color:0xd6b77c,size:innerWidth<720?.018:.026,transparent:true,opacity:.58})); scene.add(points);
+
+    const grid = new THREE.GridHelper(18,18,0x3d3529,0x211f1a); grid.position.y=-.12; grid.material.transparent=true; grid.material.opacity=.32; scene.add(grid);
+
+    const pointer = {x:0,y:0};
+    const onPointer = e => { pointer.x=(e.clientX/innerWidth-.5)*2; pointer.y=-(e.clientY/innerHeight-.5)*2; };
+    const onResize = () => { camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth,innerHeight); renderer.setPixelRatio(Math.min(devicePixelRatio,innerWidth<720?1.25:1.8)); };
+    addEventListener('pointermove',onPointer,{passive:true}); addEventListener('resize',onResize);
+
+    const clock = new THREE.Clock();
+    const tick = () => {
+      const t=clock.getElapsedTime(); const scroll=Math.min(1,scrollY/Math.max(1,innerHeight*1.65));
+      architecture.rotation.y += ((pointer.x*.26 + scroll*.8 + Math.sin(t*.18)*.08)-architecture.rotation.y)*.035;
+      architecture.rotation.x += ((pointer.y*-.08 + Math.sin(t*.23)*.018)-architecture.rotation.x)*.035;
+      architecture.position.y = -1.25 + Math.sin(t*.45)*.045 + scroll*.45;
+      architecture.scale.setScalar(1 + scroll*.13);
+      points.rotation.y = t*.012; points.rotation.x = Math.sin(t*.1)*.02;
+      camera.position.x += ((4.8 + pointer.x*1.1 - scroll*1.1)-camera.position.x)*.025;
+      camera.position.y += ((3.3 + pointer.y*.35 + scroll*.35)-camera.position.y)*.025;
+      camera.position.z += ((8.8 - scroll*1.25)-camera.position.z)*.025;
+      camera.lookAt(0,1.2,0);
+      renderer.render(scene,camera); requestAnimationFrame(tick);
+    }; tick();
+
+    setTimeout(() => document.getElementById('loader')?.classList.add('done'), 650);
+  } catch (error) { console.warn('3D enhancement unavailable', error); document.getElementById('loader')?.classList.add('done'); }
 }
+boot3D();
 
-let ticking = false;
-window.addEventListener('scroll', () => {
-  if (!ticking) {
-    requestAnimationFrame(() => { updateHero(); updateNav(); ticking = false; });
-    ticking = true;
-  }
-}, { passive: true });
-window.addEventListener('resize', updateHero, { passive: true });
-updateHero(); updateNav();
-
-window.addEventListener('pointermove', e => {
-  const x = (e.clientX / window.innerWidth - .5) * 2;
-  const y = (e.clientY / window.innerHeight - .5) * 2;
-  document.documentElement.style.setProperty('--mx', x.toFixed(3));
-  document.documentElement.style.setProperty('--my', y.toFixed(3));
-}, { passive: true });
+setTimeout(() => document.getElementById('loader')?.classList.add('done'), 1800);
