@@ -50,7 +50,6 @@ body::selection { background: rgba(201,168,106,.28) !important; }
 .nav-cta:hover, .pill-button:hover { box-shadow: 0 0 30px rgba(201,168,106,.26) !important; }
 .text-link { border-bottom-color: rgba(201,168,106,.38) !important; }
 .tiny-pill { border-color: rgba(201,168,106,.25) !important; }
-}
 `
 const css = baseCss + themeCss
 const js = await readFile(new URL('./site.js', import.meta.url), 'utf8')
