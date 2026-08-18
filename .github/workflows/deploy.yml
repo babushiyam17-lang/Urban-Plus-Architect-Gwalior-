@@ -17,6 +17,26 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Restore animated architecture hero video
+        shell: python
+        run: |
+          from pathlib import Path
+          p = Path("index.html")
+          s = p.read_text(encoding="utf-8")
+          video = '<video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="https://strvid.nyc3.cdn.digitaloceanspaces.com/cloudinary/hero_city_iglhwn.jpg"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_094631_d30ab262-45ee-4b7d-99f3-5d5848c8ef13.mp4" type="video/mp4"></video>'
+          css = '<style>.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}.hero-art{z-index:1;background:linear-gradient(180deg,rgba(7,12,18,.08),rgba(7,12,18,.18) 42%,rgba(7,12,18,.82) 100%);mix-blend-mode:multiply}.hero-building{z-index:1}.hero-content{z-index:3}</style>'
+          marker = '<section class="hero"><div class="hero-art"></div>'
+          if 'class="hero-video"' not in s:
+              if marker not in s:
+                  raise SystemExit("Hero marker not found; refusing unsafe edit")
+              s = s.replace(marker, '<section class="hero">' + video + '<div class="hero-art"></div>', 1)
+              s = s.replace('</head>', css + '</head>', 1)
+              p.write_text(s, encoding="utf-8")
+      - name: Verify hero video is present
+        run: |
+          test -f index.html
+          grep -q 'class="hero-video"' index.html
+          grep -q 'hf_20260418_094631_d30ab262-45ee-4b7d-99f3-5d5848c8ef13.mp4' index.html
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload site
