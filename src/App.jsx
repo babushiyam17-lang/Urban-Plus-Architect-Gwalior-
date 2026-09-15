@@ -1,103 +1,103 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import ArchitecturalScene from './components/ArchitecturalScene'
-import ProjectVisual from './components/ProjectVisual'
-import { projects, services } from './data/projects'
 import './styles.css'
-import './ai.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
-function Icon({ name }) {
-  const paths = {
-    arrow: 'M7 17 17 7M9 7h8v8',
-    message: 'M21 12a8.5 8.5 0 0 1-12.8 7.3L3 21l1.7-5.1A8.5 8.5 0 1 1 21 12Z',
-    close: 'M6 6l12 12M18 6 6 18',
-  }
-  return <svg aria-hidden="true" viewBox="0 0 24 24"><path d={paths[name]} /></svg>
+const projects = [
+  { title: 'Courtyard House', type: 'Residential', year: '2026', location: 'Gwalior', image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1800&q=85' },
+  { title: 'The Glass Residence', type: 'Residential', year: '2026', location: 'Bhopal', image: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1800&q=85' },
+  { title: 'Monument House', type: 'Architecture', year: '2025', location: 'Indore', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=85' },
+  { title: 'Urban Villa', type: 'Interiors', year: '2025', location: 'Gwalior', image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1800&q=85' },
+]
+
+const services = ['Architecture', 'Interior Design', '3D Visualization', 'Renovation & Consultation']
+
+function Arrow() { return <span className="arrow">↗</span> }
+
+function HeroScene() {
+  return <div className="scene" aria-hidden="true">
+    <div className="scene-glow" />
+    <div className="building building-back"><i/><i/><i/><i/><i/><i/></div>
+    <div className="building building-main"><i/><i/><i/><i/><i/><i/><i/><i/></div>
+    <div className="ground-grid" />
+    <div className="scene-label">UP / 01 — SPATIAL STUDY</div>
+  </div>
 }
 
 export default function App() {
-  const rootRef = useRef(null)
-  const [selectedProject, setSelectedProject] = useState(null)
-  const [activeService, setActiveService] = useState(0)
-  const [submitted, setSubmitted] = useState(false)
+  const [menu, setMenu] = useState(false)
+  const [filter, setFilter] = useState('All')
+  const [selected, setSelected] = useState(null)
 
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReducedMotion) return undefined
-    const context = gsap.context(() => {
-      gsap.from('.reveal-title span', { yPercent: 70, opacity: 0, duration: 1.45, ease: 'power2.out', stagger: 0.11, force3D: true })
-      gsap.from('.hero .fade', { y: 14, opacity: 0, duration: 1.15, delay: 0.42, stagger: 0.1, ease: 'power2.out', force3D: true })
-      gsap.utils.toArray('.reveal').forEach((element) => gsap.from(element, { scrollTrigger: { trigger: element, start: 'top 86%', once: true, fastScrollEnd: true }, y: 24, opacity: 0, duration: 1.05, ease: 'power2.out', force3D: true }))
-      gsap.utils.toArray('.project-card').forEach((card) => {
-        const visual = card.querySelector('.project-visual')
-        if (!visual) return
-        gsap.to(visual, { scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: 1.35, invalidateOnRefresh: true }, yPercent: -4, ease: 'none', force3D: true })
-      })
-      gsap.to('.process-line', { scrollTrigger: { trigger: '.process', start: 'top 72%', end: 'bottom 70%', scrub: 1.5, invalidateOnRefresh: true }, scaleY: 1, transformOrigin: 'top', ease: 'none' })
-      const refresh = () => ScrollTrigger.refresh()
-      window.addEventListener('load', refresh, { once: true })
-      setTimeout(refresh, 250)
-    }, rootRef)
-    return () => context.revert()
+    const ctx = gsap.context(() => {
+      gsap.from('.hero-kicker, .hero-copy h1 .line, .hero-copy > p, .hero-copy .hero-actions', { y: 55, opacity: 0, duration: 1.1, stagger: .12, ease: 'power3.out' })
+      gsap.from('.hero-stat', { y: 30, opacity: 0, duration: .8, stagger: .12, delay: .8, ease: 'power2.out' })
+      gsap.utils.toArray('.reveal').forEach((el) => gsap.from(el, { scrollTrigger: { trigger: el, start: 'top 88%', once: true }, y: 42, opacity: 0, duration: 1, ease: 'power3.out' }))
+      gsap.utils.toArray('.project-image').forEach((el) => gsap.fromTo(el, { scale: 1.12 }, { scale: 1, scrollTrigger: { trigger: el, start: 'top 90%', end: 'bottom 10%', scrub: 1.4 } }))
+      gsap.to('.scene', { yPercent: 8, scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } })
+    })
+    return () => ctx.revert()
   }, [])
 
-  useEffect(() => {
-    if (!selectedProject) return undefined
-    const onKeyDown = (event) => event.key === 'Escape' && setSelectedProject(null)
-    document.body.style.overflow = 'hidden'
-    window.addEventListener('keydown', onKeyDown)
-    return () => { document.body.style.overflow = ''; window.removeEventListener('keydown', onKeyDown) }
-  }, [selectedProject])
+  const categories = ['All', 'Residential', 'Architecture', 'Interiors']
+  const visible = filter === 'All' ? projects : projects.filter(p => p.type === filter)
 
-  const handleSubmit = (event) => { event.preventDefault(); setSubmitted(true) }
+  return <div className="site">
+    <header className="nav">
+      <a className="logo" href="#top" onClick={() => setMenu(false)}><span>URBAN</span><b>PLUS</b><small>ARCHITECT</small></a>
+      <nav className={menu ? 'nav-links open' : 'nav-links'}>
+        <a href="#work" onClick={() => setMenu(false)}>Work</a>
+        <a href="#studio" onClick={() => setMenu(false)}>Studio</a>
+        <a href="#services" onClick={() => setMenu(false)}>Services</a>
+        <a href="#contact" onClick={() => setMenu(false)}>Contact</a>
+      </nav>
+      <a className="nav-cta" href="#contact">Start a project <Arrow/></a>
+      <button className="menu-btn" onClick={() => setMenu(!menu)} aria-label="Toggle menu"><span/><span/></button>
+    </header>
 
-  return (
-    <main ref={rootRef}>
-      <section className="hero" id="top" aria-labelledby="hero-title">
-        <ArchitecturalScene />
-        <nav aria-label="Primary navigation">
-          <a className="brand" href="#top">Urban Plus Architect</a>
-          <a href="#projects">Work</a><a href="#services">Services</a><a href="#ai">AI Studio</a><a href="#contact">Contact</a>
-        </nav>
+    <main id="top">
+      <section className="hero">
+        <HeroScene />
         <div className="hero-copy">
-          <p className="eyebrow fade">Gwalior / India — Architecture Studio</p>
-          <h1 id="hero-title" className="reveal-title"><span>Spaces</span><span>that move</span><span>people.</span></h1>
-          <p className="hero-text fade">Architecture, interiors and 3D visualization shaped with proportion, restraint and a close reading of how people live.</p>
-          <a className="button fade" href="#projects">Explore our work <Icon name="arrow" /></a>
+          <div className="hero-kicker">Gwalior / India <span>—</span> Architecture & Spatial Design</div>
+          <h1><span className="line">Spaces</span><span className="line">with a</span><span className="line outline">point of view.</span></h1>
+          <p>We create architecture and interiors that balance form, light, material and the way people actually live.</p>
+          <div className="hero-actions"><a className="button" href="#work">Explore selected work <Arrow/></a><span>Scroll to explore ↓</span></div>
         </div>
-        <div className="scroll fade">Scroll</div>
+        <div className="hero-bottom">
+          <div className="hero-stat"><strong>12+</strong><span>Projects<br/>designed</span></div>
+          <div className="hero-stat"><strong>04</strong><span>Design<br/>disciplines</span></div>
+          <div className="hero-stat hero-note"><span>Architecture should feel<br/><em>inevitable, not excessive.</em></span></div>
+        </div>
       </section>
 
-      <section className="intro section" aria-labelledby="intro-title"><p className="section-kicker reveal">Studio Philosophy</p><h2 id="intro-title" className="reveal">We design for how life feels.</h2><p className="lead reveal">Urban Plus Architect approaches each brief through context, proportion, light, material and human experience. We look for the quiet decisions that make a space feel inevitable: a shaded threshold, a wall that catches morning light, a room scaled for conversation, a material that grows warmer with time.</p></section>
-
-      <section className="projects section" id="projects" aria-labelledby="projects-title">
-        <div className="section-head reveal"><p className="section-kicker">Selected Projects</p><h2 id="projects-title">The original five project visuals, restored.</h2></div>
-        <div className="project-grid">{projects.map((project) => <button className="project-card reveal" key={project.id} onClick={() => setSelectedProject(project)}><ProjectVisual {...project} /><span className="project-meta">{project.category} · {project.meta}</span><strong>{project.title}</strong><p>{project.summary}</p></button>)}</div>
+      <section className="intro section" id="studio">
+        <div className="section-index">01 / Studio</div>
+        <div className="intro-content reveal"><p className="eyebrow">THE URBAN PLUS APPROACH</p><h2>We design for<br/><em>how life feels.</em></h2><p className="lead">Every project starts with a simple question: what should this space make you feel? From a private residence to a commercial interior, we use proportion, natural light, material and movement to build an answer.</p><a className="text-link" href="#contact">Talk to the studio <Arrow/></a></div>
       </section>
 
-      <section className="services section" id="services" aria-labelledby="services-title"><p className="section-kicker reveal">Services</p><h2 id="services-title" className="visually-hidden">Services</h2><div className="service-list reveal">{services.map(([title, description], index) => <button key={title} className={activeService === index ? 'active' : ''} onClick={() => setActiveService(index)} onMouseEnter={() => setActiveService(index)} aria-expanded={activeService === index}><span>0{index + 1}</span><strong>{title}</strong><p>{description}</p></button>)}</div></section>
-
-      <section className="ai-studio section" id="ai" aria-labelledby="ai-title">
-        <div className="ai-copy reveal"><p className="section-kicker">Artificial Intelligence</p><h2 id="ai-title">AI-assisted architecture, without losing the human eye.</h2><p className="lead">Use AI to explore massing, façade directions, material palettes, lighting moods and early visual concepts faster — while final design decisions stay grounded in site, structure and real human needs.</p><a className="button" href="#contact">Discuss an AI concept <Icon name="arrow" /></a></div>
-        <div className="ai-cards reveal" aria-label="AI capabilities"><article><span>01</span><strong>Concept Generation</strong><p>Rapid visual directions for early design exploration.</p></article><article><span>02</span><strong>Material & Mood</strong><p>Compare finishes, light, atmosphere and façade language.</p></article><article><span>03</span><strong>3D Visualization</strong><p>Turn selected concepts into polished presentation imagery.</p></article></div>
+      <section className="work section" id="work">
+        <div className="work-head reveal"><div><div className="section-index">02 / Selected work</div><h2>Built ideas.<br/><em>Real spaces.</em></h2></div><p>Selected residential, architectural and interior work developed by Urban Plus.</p></div>
+        <div className="filters reveal">{categories.map(c => <button className={filter === c ? 'active' : ''} key={c} onClick={() => setFilter(c)}>{c}</button>)}</div>
+        <div className="projects">{visible.map((p, i) => <article className={'project reveal p' + i} key={p.title} onClick={() => setSelected(p)}><div className="project-image"><img src={p.image} alt={p.title}/><span className="project-number">0{i+1}</span><span className="project-open">View project <Arrow/></span></div><div className="project-meta"><div><span>{p.type}</span><h3>{p.title}</h3></div><div><span>{p.location}</span><span>{p.year}</span></div></div></article>)}</div>
       </section>
 
-      <section className="philosophy" aria-label="Design statement"><h2 className="reveal">Good architecture does not shout.<br />It stays with you.</h2></section>
+      <section className="manifesto"><div className="manifesto-shape"/><p className="eyebrow reveal">A DESIGN PRINCIPLE</p><h2 className="reveal">Good architecture<br/>doesn't shout.<br/><em>It stays with you.</em></h2><span className="manifesto-mark">UP</span></section>
 
-      <section className="process section" aria-labelledby="process-title"><p className="section-kicker reveal">Process</p><h2 id="process-title" className="visually-hidden">Design process</h2><div className="process-line" aria-hidden="true" />{['Discover', 'Develop', 'Visualize', 'Deliver'].map((step, index) => <article className="step reveal" key={step}><span>{String(index + 1).padStart(2, '0')}</span><h3>{step}</h3><p>{['Listen, map the context and define the emotional intent of the space.','Shape plans, volumes and material direction with clear design logic.','Use 3D views and atmosphere studies to refine decisions before execution.','Coordinate details into a calm, buildable and enduring final experience.'][index]}</p></article>)}</section>
-
-      <section className="contact section" id="contact" aria-labelledby="contact-title">
-        <div className="reveal"><p className="section-kicker">Project Enquiry</p><h2 id="contact-title">Tell us what you want to build.</h2><p className="placeholder">Share your project basics and we can start the conversation around architecture, interiors, 3D visualization or an AI-assisted concept.</p><a className="whatsapp" href="https://wa.me/910000000000"><Icon name="message" /> WhatsApp</a></div>
-        <form className="reveal" onSubmit={handleSubmit}>{['Name','Email','Phone','Project type','Budget range'].map((field) => <label key={field}>{field}<input required={field !== 'Budget range'} type={field === 'Email' ? 'email' : 'text'} placeholder={field} /></label>)}<label>Message<textarea placeholder="Tell us about the site, scope and timeline." /></label><button className="button" type="submit">{submitted ? 'Enquiry ready ✓' : 'Send enquiry'}</button>{submitted && <p className="form-success" role="status">Thanks — your enquiry is captured on this page. Connect the form to your preferred email or CRM to receive submissions.</p>}</form>
+      <section className="services section" id="services">
+        <div className="section-index reveal">03 / What we do</div><div className="services-layout"><div className="reveal"><h2>From first line<br/>to final <em>light.</em></h2><p className="lead">A focused design studio for architecture, interiors, visualisation and thoughtful transformations.</p></div><div className="service-list">{services.map((s, i) => <div className="service reveal" key={s}><span>0{i+1}</span><h3>{s}</h3><Arrow/></div>)}</div></div>
       </section>
 
-      <footer><strong>Urban Plus Architect</strong><span>Gwalior, India</span><span>Architecture / Interiors / Spatial Design / AI Visualization</span><span>Instagram · Email · Phone</span></footer>
-      {selectedProject && <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />}
+      <section className="process section"><div className="section-index reveal">04 / Process</div><div className="process-grid"><h2 className="reveal">A clear process.<br/><em>Better decisions.</em></h2>{['Discover','Develop','Visualize','Deliver'].map((x,i)=><article className="step reveal" key={x}><span>0{i+1}</span><h3>{x}</h3><p>{['Understand the site, brief, lifestyle and ambition.','Shape plans, volumes, materials and spatial logic.','Test atmosphere, light and detail before execution.','Coordinate the final design into a buildable reality.'][i]}</p></article>)}</div></section>
+
+      <section className="contact" id="contact"><div className="contact-top"><div className="section-index">05 / Start a project</div><span>Gwalior · Madhya Pradesh · India</span></div><div className="contact-main"><div><p className="eyebrow">LET'S BUILD SOMETHING MEANINGFUL</p><h2>Have a space<br/>in <em>mind?</em></h2></div><div><p className="lead">Tell us about your site, project or idea. We'll start with a conversation — no complicated brief required.</p><a className="contact-button" href="https://wa.me/917000000000">WhatsApp the studio <Arrow/></a><a className="email-link" href="mailto:hello@urbanplusarchitects.com">hello@urbanplusarchitects.com</a></div></div></section>
     </main>
-  )
-}
 
-function ProjectModal({ project, onClose }) { return <div className="modal-backdrop" onMouseDown={onClose}><section className="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" onMouseDown={(event) => event.stopPropagation()}><button className="close" onClick={onClose} aria-label="Close project"><Icon name="close" /></button><ProjectVisual {...project} /><div><p className="section-kicker">{project.category} · {project.meta}</p><h2 id="modal-title">{project.title}</h2><p>{project.details}</p></div></section></div> }
+    <footer><div className="footer-logo">URBAN<br/><b>PLUS</b><small>ARCHITECT</small></div><div><span>Gwalior, India</span><span>Architecture / Interiors / Visualization</span></div><div className="footer-right"><a href="#top">Back to top ↑</a><span>© 2026 Urban Plus Architect</span></div></footer>
+
+    {selected && <div className="modal-bg" onClick={() => setSelected(null)}><div className="modal" onClick={e => e.stopPropagation()}><button onClick={() => setSelected(null)}>×</button><img src={selected.image} alt={selected.title}/><div><span>{selected.type} · {selected.year}</span><h2>{selected.title}</h2><p>A contemporary Urban Plus study focused on proportion, natural light, material warmth and a strong connection between inside and outside.</p><a className="button" href="#contact" onClick={() => setSelected(null)}>Discuss a similar project <Arrow/></a></div></div></div>}
+  </div>
+}
